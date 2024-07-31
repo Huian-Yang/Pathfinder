@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>PathfinderGPT 3.5</title>
+    <script type="module" src="https://md-block.verou.me/md-block.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to PathfindGPT!</h1>
+        <h3>Description here!</h3>
+    <header>
+
+<div class="main">
+    <center>
+        <form action="/" method="POST">
+            <input name="prompt" type="text" placeholder="Enter your message here...">
+            <button type="submit">
+                <i class="next-icon">&rsaquo;</i>
+            </button>
+        </form>
+    </center>
+</div>
+
+    <div class="output">
+    <md-block class="text-center">{{ output }}</pmd-block>
+    </div>
+</body>
+
+</html>
