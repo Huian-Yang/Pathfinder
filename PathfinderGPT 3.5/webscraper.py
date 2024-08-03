@@ -1,8 +1,17 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+import os 
 
 def scrape_to_jsonl(url, output_jsonl):
+    # Full path to the files directory
+    full_path = os.path.join('files', output_jsonl)
+    
+    # Ensure the directory exists
+    directory = os.path.dirname(full_path)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
     # Send a request to the URL
     response = requests.get(url)
     
@@ -30,6 +39,6 @@ def scrape_to_jsonl(url, output_jsonl):
     print(f"Data appended to {output_jsonl}")
 
 # Example usage
-url = '' # look up a website with the steps to join a job and input it here 
-output_jsonl = 'Lawyer3.jsonl' # name the file with the job and with the endname jsonL
+url = 'https://health.clevelandclinic.org/types-of-doctors' # look up a website with the steps to join a job and input it here 
+output_jsonl = 'Pre-meddoctortypes.jsonl' # name the file with the job and with the endname jsonL
 scrape_to_jsonl(url, output_jsonl)
