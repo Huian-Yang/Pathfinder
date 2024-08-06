@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 
 function Form() {
+  const [aiResponse, setAiResponse] = useState("");
   const [formData, setFormData] = useState({
     Major: "",
     SchoolYear: " ",
@@ -35,27 +36,32 @@ function Form() {
     event.preventDefault();
     console.log(formData);
     try {
-        const response = await fetch('YOUR_BACKEND_ENDPOINT', {
+        const response = await fetch('http://localhost:5000/roadmap', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData)
         });
-        const responseData = await response.json();
+        const responseData = await response.json(); //Converts the reponse body to JSON
         console.log('Submitted successfully:', responseData);
-    } catch (error) {
+        setAiResponse(responseData.response); 
+
+    } catch (error) 
+
+    {
         console.error('Error submitting form:', error);
     }
   };
 
   return (
+    <div>
     <form onSubmit={handleSubmit}>
       <label>
         Major:{" "}
         <input
           type="text"
-          name="major"
+          name="Major"
           placeholder="Please input your Major "
           value={formData.Major}
           onChange={handleChange}
@@ -64,7 +70,7 @@ function Form() {
       <br />
       <label>
         Year :{" "}
-        <select name="School Year" value= {formData.SchoolYear} onChange={handleChange}>
+        <select name="SchoolYear" value= {formData.SchoolYear} onChange={handleChange}>
             <option value = ""> Select a Year  </option>
             {SchoolYear.map((year,index) => (
                 <option key={index} value ={year}>{year}</option>
@@ -73,8 +79,9 @@ function Form() {
       </label>
       <label>
         Classes:{" "}
-        <textarea
-          name="classes"
+        <input
+          name="Classes"
+          type="text"
           value={formData.Classes}
           placeholder="Please input all the classes or courses that you have taken  "
           onChange={handleChange}
@@ -85,7 +92,8 @@ function Form() {
       <label>
         Internships:{" "}
         <textarea
-          name="internships"
+          name="Internships"
+          type="text"
           placeholder="Please input your internship and what you did or N/A"
           value={formData.Internships}
           onChange={handleChange}
@@ -96,7 +104,8 @@ function Form() {
       <label>
         Extracurriculars:{" "}
         <textarea
-          name="extracurriculars"
+          name="Extracurriculars"
+          type="text"
           placeholder="Please input your Extracurriculars or N/A "
           value={formData.Extracurriculars}
           onChange={handleChange}
@@ -108,7 +117,8 @@ function Form() {
         Clubs:{" "}
         <textarea
           
-          name="clubs"
+          name="Clubs"
+          type="text"
           placeholder="Please input your Clubs or N/A "
           value={formData.Clubs}
           onChange={handleChange}
@@ -119,7 +129,8 @@ function Form() {
       <label>
         Certifications:{" "}
         <textarea
-          name="certifications"
+          name="Certifications"
+          type="text"
           placeholder="Please input your certifIcations or N/A "
           value={formData.Certifications}
           onChange={handleChange}
@@ -130,8 +141,9 @@ function Form() {
       <label>
         GPA:{" "}
         <input
-          type="text"
-          name="gpa"
+          type="integer"
+          name="Gpa"
+          placeholder = "Please enter your Money "
           value={formData.Gpa}
           onChange={handleChange}
         />
@@ -139,6 +151,11 @@ function Form() {
       <br />
       <button type="submit">Submit</button>
     </form>
+    {aiResponse && <div className="ai-response">
+      <h3>AI Response:</h3>
+      <p>{aiResponse}</p>
+    </div>}
+  </div>
   );
 }
 export default Form;

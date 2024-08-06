@@ -1,51 +1,118 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, jsonify
+import json
 from openai import OpenAI
+import os
 from dotenv import load_dotenv, dotenv_values
 
 # Load environment variables
 load_dotenv()
 
-connection = OpenAI()
+# Access your API key
+api_key = os.getenv('OPENAI_API_KEY')
 
-app = Flask(__name__)
+connection = OpenAI(api_key=api_key)
+
+app = Flask(__name__)   
+     
 
 # Enable auto-reload
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Create our main route in our code, loading our index.html page
-@app.route("/", methods=["GET", "POST"])
+@app.route("/roadmap", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
+        #Parse the Json payload 
+        data = request.get_json()
+        
+        #check if the data is recived 
+        if not data:
+             return jsonify({"error": "No data received"}), 400
+        
+        #Here we get all the data from the form '
+        Career = data.get('Career', 'N/A')
+        Major = data.get('Major', 'N/A')
+        SchoolYear = data.get('SchoolYear', 'N/A')
+        Classes = data.get('Classes', 'N/A')
+        Internship = data.get('Internships', 'N/A')
+        Extracurriculars = data.get('Extracurriculars', 'N/A')
+        Club  = data.get('Clubs', 'N/A')
+        Certifications  = data.get('Certifications', 'N/A')
+        Gpa  = data.get('Gpa', 'N/A')
+
         # Handle the POST request
-        prompt = request.form.get("prompt")
-        if not prompt:
-            print("You forgot the prompt!")
-            return redirect("/")
+        prompt = f"I am a {SchoolYear} student who is interested in studying {Major}, I have taken {Classes} classes through out my year in school 
+        I have also participated in some {Internship} and have done a lot of extracurriculars here are some of them: {Extracurriculars} I 
+        have also particpated in a lot of activites outside school like {Club}, I have done some studying outside class and have gained some {Certifications} and I currently have a GPA of {Gpa}, I would 
+        like you to give me a detailed step by step roadmap to reach my goal , I want to know the articles i should read, the classes I should take 
+        the applications or tools i should use , the certifications that I should get and the programs that I should focus on , like fellowships , internships 
+        summer with examples. I also want these to be year by year you can start form the year that I am currently in and move to the last year "
         
-        # API call to OpenAI
-        output = askAI(prompt)
-        # print(output)
-        
-        # Return the result to the template
-        return render_template("index.html", output=output)
+        #Call the function to process the prompt with your AI model 
+        response = askAI(prompt)
+
+        #Return AI reponse as a JSON
+        return jsonify({"response": response})
+    
     else:
-        # GET method
-        return render_template("index.html")
+        #For any non -Post request 
+        return jsonify({"error": "Method not allowed "})
+    
+@app.route("/FindYourCareer", methods=["GET", "POST"])
+def FindyourCareer():
+    #Get the data in json format 
+    if request.method == "POST":
+        data = request.get_json()
+        
+        #check if the data is recived 
+        if not data:
+             return jsonify({"error": "No data received"}), 400
+        
+    #Here we get the data from the form 
+    Activities = data.get('Activities','N/A')
+    Subjects = data.get('Subjects','N/A')
+    Classes = data.get('Classes','N/A')
+    Extracurriculars = data.get(' Extracurriculars','N/A')
+    Clubs = data.get('Clubs','N/A')
+    Certifications = data.get('Certifcation','N/A')
+    Gpa = data.get('Gpa','N/A')
+
+
+    #Handle the costume prompt 
+    prompt = f""
+
+    
+
+          
+         
+        
+        
+    #     # Return the result to the template
+    #     return render_template("index.html", output=output)
+    # else:
+    #     # GET method
+    #     return render_template("index.html")
 
 def askAI(prompt):
+    try:
         completion = connection.chat.completions.create(
             model="gpt-3.5-turbo",
-            messages=[
+            messages=
+            [
                 {
                     "role": "user",
                     "content": prompt
                 },
                 {
                     "role": "system",
-                    "content": "Answer with bro at the end of each sentence"
+                    "content": "Answer the prompt with accuracy and detail and I want you to start and end with the year and let it to be step by step"
                 }
             ]
         )
         # Correct way to access the content of the response
-        response = completion.choices[0].message.content
+        response = completion['choices'][0]['message']['content']
         return response
+    except Exception as e:
+        print("Error occurred: ", str(e))
+        return "Error processing your request."
+

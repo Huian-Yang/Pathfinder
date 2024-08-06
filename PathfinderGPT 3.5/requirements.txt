@@ -1,5 +1,5 @@
+Flask==2.1.2
+python-dotenv==0.20.0
 openai
-python-dotenv
-requests
-beautifulsoup4
-os 
+gunicorn==20.1.0
+flask-cors==3.0.10
