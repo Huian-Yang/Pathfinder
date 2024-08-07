@@ -14,7 +14,9 @@ api_key = os.getenv('OPENAI_API_KEY')
 connection = OpenAI(api_key=api_key)
 
 app = Flask(__name__)   
-CORS(app)
+CORS(app, resources={r"/roadmap": {"origins": "http://192.168.56.1:3000"}})
+app.run(debug=True)
+
      
 
 # Enable auto-reload
@@ -67,6 +69,7 @@ def generate_roadmap():
         #For any non -Post request 
         return jsonify({"error": "Method not allowed "})
     
+    
 @app.route("/FindYourCareer", methods=["GET", "POST"])
 def FindyourCareer():
     #Get the data in json format 
@@ -88,7 +91,7 @@ def FindyourCareer():
 
 
     #Handle the costume prompt 
-    prompt = f""
+    prompt = f" "
 
     
 
@@ -103,6 +106,7 @@ def FindyourCareer():
     #     return render_template("index.html")
 
 def askAI(prompt):
+    content = "Answer the prompt with accuracy and detail. Please structure the response as follows: ""Year: The year, Courses: List courses needed to achieve the goal with descriptions of each course , ""Extracurricular: List extracurricular activities needed with the skill that needs to be gotten from the Extracurricular, ""Clubs/Orgs: List relevant clubs and organizations that the user needs to join with the description of each course , ""Internships: Describe necessary internships that the user needs to be take with the description of the internships , ""Certifications: List of certification with the description or the skill that needs t be gotten from ."
     try:
         completion = connection.chat.completions.create(
             model="gpt-3.5-turbo",
@@ -113,11 +117,12 @@ def askAI(prompt):
                     "content": prompt
                 },
                 {
-                    "role": "system",
-                    "content": "Answer the prompt with accuracy and detail and I want you to start and end with the year and let it to be step by step"
+                     "role": "system",
+                    "content": content
                 }
             ],
-            temperature=0
+
+            temperature = 0
         )
         # Correct way to access the content of the response
         response = completion.choices[0].message.content

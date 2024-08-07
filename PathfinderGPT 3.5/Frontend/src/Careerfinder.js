@@ -1,6 +1,8 @@
 // Here we import the react components
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 function Form() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     Activities: "",
     Subjects: "",
@@ -186,6 +188,28 @@ function Form() {
         >
           Find your career!
         </button>
+        <button
+            style={{
+            color: "#f4c142",
+            borderColor: "#f4c142",
+            background: "white",
+            fontSize: "1.5em",
+            borderRadius: "10px",
+            padding: "10px 10px",
+            fontWeight: "bold",
+            borderWidth: "10px",
+            borderStyle: "dotted",
+            fontFamily: "sans-serif",
+            lineHeight: "1.5",
+            textAlign: "center",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+              }}
+              onClick={() => navigate("/")}
+            >
+              Back
+            </button>
       </form>
     </div>
   );
