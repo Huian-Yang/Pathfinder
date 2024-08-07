@@ -4,6 +4,7 @@ import React, { useState } from "react";
 function Form() {
   const [aiResponse, setAiResponse] = useState("");
   const [formData, setFormData] = useState({
+    Career: "",
     Major: "",
     SchoolYear: " ",
     classNamees: "",
@@ -23,6 +24,16 @@ function Form() {
     "Fourth Year ",
     "Graduate Student",
   ];
+  const gpaRanges = [
+    '4.0 - 5.0' ,
+    '3.5 - 4.0' ,
+    '3.0 - 3.5' ,
+    '2.5 - 3.0' ,
+    '2.0 - 2.5' ,
+    '1.5 - 2.0' ,
+    '1.0 - 1.5' ,
+    '0.5 - 1.0' ,
+    '0.0 - 0.5'];
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -36,7 +47,7 @@ function Form() {
     event.preventDefault();
     console.log(formData);
     try {
-      const response = await fetch("http://localhost:5000/roadmap", {
+      const response = await fetch('http://localhost:5000/roadmap', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -94,6 +105,23 @@ function Form() {
             }}
           />
         </label>
+        <label style={{ display: "block", margin: "10px 0" }}>
+          <input
+            type="text"
+            name="Career"
+            placeholder="Career Interest"
+            value={formData.Career}
+            onChange={handleChange}
+            style={{
+              background: "white",
+              color: "#f4c142",
+              width: "100%",
+              padding: "10px",
+              borderRadius: "10px",
+              border: "3px dotted #5bc5b8",
+            }}
+          />
+        </label>
 
         <div style={{ display: "flex", gap: "10px", margin: "10px 0" }}>
           <label style={{ display: "block", margin: "5px 0", flex: "1" }}>
@@ -118,11 +146,10 @@ function Form() {
               ))}
             </select>
           </label>
-          <label style={{ display: "block", margin: "5px 0" }}>
-            <input
-              type="text"
+
+          <label style={{ display: "block", margin: "5px 0" , flex : "1"}}>
+            <select
               name="GPA"
-              placeholder="GPA"
               value={formData.Gpa}
               onChange={handleChange}
               style={{
@@ -133,7 +160,12 @@ function Form() {
                 borderRadius: "10px",
                 border: "3px dotted #ec695b",
               }}
-            />
+            >
+             <option value=""> GPA </option>
+             {gpaRanges.map((range, index) => ( <option key={index} value={range}>{range}
+                </option>
+                ))}
+            </select>
           </label>
         </div>
 
@@ -248,10 +280,16 @@ function Form() {
           <div
             className="ai-response"
             style={{
-              marginTop: "20px",
-              padding: "10px",
-              background: "#e9ecef",
-              borderRadius: "5px",
+              marginTop: '20px',
+              padding: '20px',
+              backgroundColor: '#f8f9fa',
+              border: '1px solid #dee2e6',
+              borderRadius: '10px',
+              boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+              color: '#212529',
+              fontFamily: "'Courier New'",
+              lineHeight: '1.5',
+              overflowX: 'auto'
             }}
           >
             <h3>AI Response:</h3>
