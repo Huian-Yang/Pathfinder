@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './style.css'; // Assuming you want to import global styles
 import Careerfinder from './Careerfinder';
+import './index.css';
+
 
 import App from './App'; 
 ReactDOM.render(
