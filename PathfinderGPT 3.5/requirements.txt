@@ -3,5 +3,6 @@ python-dotenv==0.20.0
 Openai
 gunicorn==20.1.0
 flask-cors==3.0.10
+werkzeug==2.2.2
 simplejson
 

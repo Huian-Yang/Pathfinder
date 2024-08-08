@@ -58,10 +58,10 @@ function Form() {
         body: JSON.stringify(formData),
       });
       const responseData = await response.json();
-      console.log("Submitted successfully:", responseData);
+      console.log("Submitted successfully:", responseData.response);
       setAiResponse(responseData.response);
 
-      // navigate("/roadmap", { state: { aiResponse: responseData.response } });
+      navigate("/roadmap", { state: { aiResponse: responseData.response } });
     } catch (error) {
       console.error("Error submitting form:", error);
     }

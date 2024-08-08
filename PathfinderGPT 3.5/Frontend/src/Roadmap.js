@@ -6,6 +6,17 @@ import { useLocation, useNavigate } from "react-router-dom";
 function Roadmap() {
   const location = useLocation();
   const { aiResponse } = location.state || {};
+  if (aiResponse instanceof Object) {
+    console.log("responseData is an instance of Object");
+  }
+
+  // Check the type of responseData.response
+  if (typeof aiResponse === 'object') {
+    console.log("responseData.response is an object");
+  } else {
+    console.log("responseData.response is not an object");
+  }
+//   console.log(aiResponse)
   const navigate = useNavigate();
   const colors = ["#f4c142", "#ec695b", "#5bc5b8", "#f4b6c0"];
 
@@ -55,7 +66,7 @@ function Roadmap() {
           margin: "0px",
         }}
       >
-        {testData.track}
+        {aiResponse.track}
       </h1>
       <h1
         style={{
@@ -74,7 +85,7 @@ function Roadmap() {
         className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical"
         style={{ margin: "20px" }}
       >
-        {testData.years.map((yearData, yearIndex) => (
+        {aiResponse.years.map((yearData, yearIndex) => (
           <li key={yearIndex}>
             <hr
               style={{
