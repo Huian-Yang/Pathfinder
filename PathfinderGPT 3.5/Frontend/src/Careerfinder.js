@@ -50,6 +50,33 @@ function Form() {
         backgroundColor: "#5bc5b8",
       }}
     >
+              <button
+          className="btn"
+          style={{
+            backgroundColor: "white",
+            border: "0px",
+            borderRadius: "25px",
+            position: "absolute",
+            top: "3%",
+            left: "2%",
+          }}
+          onClick={() => navigate("/")}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="#5bc5b8"
+            className="w-5 h-5"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+        </button>
       <form
         onSubmit={handleSubmit}
         style={{
@@ -188,28 +215,6 @@ function Form() {
         >
           Find your career!
         </button>
-        <button
-            style={{
-            color: "#f4c142",
-            borderColor: "#f4c142",
-            background: "white",
-            fontSize: "1.5em",
-            borderRadius: "10px",
-            padding: "10px 10px",
-            fontWeight: "bold",
-            borderWidth: "10px",
-            borderStyle: "dotted",
-            fontFamily: "sans-serif",
-            lineHeight: "1.5",
-            textAlign: "center",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-              }}
-              onClick={() => navigate("/")}
-            >
-              Back
-            </button>
       </form>
     </div>
   );
