@@ -9,7 +9,7 @@ function Form() {
     Career: "",
     Major: "",
     SchoolYear: " ",
-    classNamees: "",
+    Classes: "",
     Internships: "",
     Extracurriculars: "",
     Clubs: "",
@@ -61,7 +61,7 @@ function Form() {
       console.log("Submitted successfully:", responseData);
       setAiResponse(responseData.response);
 
-      navigate("/roadmap", { state: { aiResponse: responseData.response } });
+      // navigate("/roadmap", { state: { aiResponse: responseData.response } });
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -109,8 +109,8 @@ function Form() {
           </svg>
         </button>
         <form
-          // onSubmit={handleSubmit}
-          onSubmit={() => navigate("/roadmap")}
+          onSubmit={handleSubmit}
+          // onSubmit={() => navigate("/roadmap")}
           style={{
             background: "#f9f9f9",
             border: "0px solid #f4b6c0",
@@ -183,7 +183,7 @@ function Form() {
 
             <label style={{ display: "block", margin: "5px 0", flex: "1" }}>
               <select
-                name="GPA"
+                name="Gpa"
                 value={formData.Gpa}
                 onChange={handleChange}
                 style={{
