@@ -259,16 +259,17 @@ def generate_roadmap():
           f"I have also participated in a lot of activities outside school like {Club}. I have done some studying outside class and have gained some {Certifications} and I currently have a GPA of {Gpa}. "
           f"I would like you to give me a detailed step-by-step roadmap to reach my goal. I want to know the articles I should read, the classes I should take, the applications or tools I should use, the certifications that I should get, and the programs that I should focus on, like fellowships, internships, and summer programs with examples. "
           f"I also want these to be year by year. You can start from the year that I am currently in and move to the last year. "
-          f"I want to be a {Career} in the future. your repsonse must follow thise format {formatprompt}. there shoud be no beginning message or ending message only in these format """
+          f"I want to be a {Career} in the future. your repsonse must be a RFC8259 JSON response following this format {formatprompt}. There shoud be no beginning message or ending message only in these format """
         )
 
         # Call the function to process the prompt with your AI model
         response = askAI(prompt)
-
-        print("AI Response", response)
+        print("AI Response", type(response))
+        print("json.loads(response)", type(json.loads(response)))
+        print("jsonify(response)", type(jsonify(response)))
 
         # Return AI response as a JSON
-        return jsonify({"response": response})
+        return jsonify(response)
     
     else:
         # For any non-POST request 
@@ -313,10 +314,8 @@ def FindyourCareer():
         #Call the function to process the prompt with your AI model 
         response = askAI(prompt)
 
-        print("AI Response", response)
-
         #Return AI reponse as a JSON
-        return jsonify({"response": response})
+        return json.loads(response)
     
     else:
         #For any non -Post request 
@@ -342,6 +341,10 @@ def askAI(prompt):
 
             temperature = 0
         )
+
+        # response = completion.choices[0].message['content']
+        # print("askAI response: ", response)
+        # return json.loads(response)
         # Correct way to access the content of the response
         response = completion.choices[0].message.content
         return response

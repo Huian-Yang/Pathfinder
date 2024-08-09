@@ -6,27 +6,27 @@ import { useLocation, useNavigate } from "react-router-dom";
 function Roadmap() {
   const location = useLocation();
 
-  const { aiResponse } = location.state || {};
+//   const { aiResponse } = location.state || {};
 
-  if (aiResponse instanceof Object) {
-    console.log("responseData is an instance of Object");
-  }
+//   if (aiResponse instanceof Object) {
+//     console.log("responseData is an instance of Object");
+//   }
 
-  // Check the type of responseData.response
-  if (typeof aiResponse === 'object') {
-    console.log("responseData.response is an object");
-  } else {
-    console.log("responseData.response is not an object");
-  }
+//   // Check the type of responseData.response
+//   if (typeof aiResponse === 'object') {
+//     console.log("responseData.response is an object");
+//   } else {
+//     console.log("responseData.response is not an object");
+//   }
 
 //   console.log(aiResponse)
   const navigate = useNavigate();
   const colors = ["#f4c142", "#ec695b", "#5bc5b8", "#f4b6c0"];
 
-   // If aiResponse or aiResponse.years is undefined, return a loading or error message
-  if (!aiResponse || !aiResponse.years) {
-    return <div>Loading or error... Please ensure data is passed correctly.</div>;
-  }
+//    // If aiResponse or aiResponse.years is undefined, return a loading or error message
+//   if (!aiResponse || !aiResponse.years) {
+//     return <div>Loading or error... Please ensure data is passed correctly.</div>;
+//   }
 
   return (
     <div
@@ -74,7 +74,7 @@ function Roadmap() {
           margin: "0px",
         }}
       >
-        {aiResponse.track}
+        {testData.track}
       </h1>
       <h1
         style={{
@@ -93,7 +93,7 @@ function Roadmap() {
         className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical"
         style={{ margin: "20px" }}
       >
-        {aiResponse.years.map((yearData, yearIndex) => (
+        {testData.years.map((yearData, yearIndex) => (
           <li key={yearIndex}>
             <hr
               style={{
