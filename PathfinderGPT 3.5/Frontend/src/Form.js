@@ -58,11 +58,13 @@ function Form() {
         body: JSON.stringify(formData),
       });
 
-      const responseData = await response;
-      console.log("form.js type of responseData: ",typeof(responseData));
+      const responseData = await response.json();
+      
+      console.log("form.js type of responseData: ",typeof(JSON.parse(responseData)));
+      console.log("form.js data ", JSON.parse(responseData))
       setAiResponse(responseData);
 
-      navigate("/roadmap", { state: { aiResponse: responseData} });
+      navigate("/roadmap", { state: { aiResponse: JSON.parse(responseData)} });
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -110,8 +112,8 @@ function Form() {
           </svg>
         </button>
         <form
-          // onSubmit={handleSubmit}
-          onSubmit={() => navigate("/roadmap")}
+          onSubmit={handleSubmit}
+          // onSubmit={() => navigate("/roadmap")}
           style={{
             background: "#f9f9f9",
             border: "0px solid #f4b6c0",
@@ -132,7 +134,7 @@ function Form() {
               onChange={handleChange}
               style={{
                 background: "white",
-                color: "#f4c142",
+                color: "black",
                 width: "100%",
                 padding: "10px",
                 borderRadius: "10px",
@@ -149,7 +151,7 @@ function Form() {
               onChange={handleChange}
               style={{
                 background: "white",
-                color: "#f4c142",
+                color: "black",
                 width: "100%",
                 padding: "10px",
                 borderRadius: "10px",
