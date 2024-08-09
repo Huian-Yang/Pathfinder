@@ -5,7 +5,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 function Roadmap() {
   const location = useLocation();
+
   const { aiResponse } = location.state || {};
+
   if (aiResponse instanceof Object) {
     console.log("responseData is an instance of Object");
   }
@@ -16,16 +18,22 @@ function Roadmap() {
   } else {
     console.log("responseData.response is not an object");
   }
+
 //   console.log(aiResponse)
   const navigate = useNavigate();
   const colors = ["#f4c142", "#ec695b", "#5bc5b8", "#f4b6c0"];
+
+   // If aiResponse or aiResponse.years is undefined, return a loading or error message
+  if (!aiResponse || !aiResponse.years) {
+    return <div>Loading or error... Please ensure data is passed correctly.</div>;
+  }
 
   return (
     <div
       style={{
         justifyContent: "center",
         alignItems: "center",
-        height: "100vw",
+        height: "100vh",
         width: "100vw",
         backgroundColor: "white",
         textAlign: "center",
@@ -35,7 +43,7 @@ function Roadmap() {
         className="btn"
         style={{
           backgroundColor: "#ec695b",
-          border: "0px",
+          border: "none",
           borderRadius: "25px",
           position: "absolute",
           top: "3%",
