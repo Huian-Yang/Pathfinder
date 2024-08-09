@@ -286,7 +286,7 @@ def FindyourCareer():
         return response
 
     #Get the data in json format 
-    elifif request.method == "POST":
+    elif request.method == "POST":
         data = request.get_json()
 
         if not data:
